@@ -130,7 +130,29 @@ public class MainActivity extends AppCompatActivity
 
     public void buttonParenthesisOnClick(View view)
     {
-        UpdateText("(");
+        int cursorPosition = displaySum.getSelectionStart();
+        String s = displaySum.getText().toString();
+
+        if (cursorPosition == -1)
+            displaySum.setSelection(s.length());
+
+        int countClosed = 0;
+        int countOpened = 0;
+
+        for (int i = 0; i < cursorPosition; i++)
+        {
+            if (s.charAt(i) == '(')
+                countOpened++;
+            else if (s.charAt(i) == ')')
+                countClosed++;
+
+        }
+
+        if(countOpened > countClosed)
+            UpdateText(")");
+        else
+            UpdateText("(");
+
     }
 
     public void buttonExponentOnClick(View view)
@@ -192,7 +214,7 @@ public class MainActivity extends AppCompatActivity
             SpannableStringBuilder selection = (SpannableStringBuilder) displaySum.getText();
             selection.replace(cursorPosition - 1, cursorPosition, "");
             displaySum.setText(selection);
-            displaySum.setSelection(cursorPosition-1);
+            displaySum.setSelection(cursorPosition - 1);
         }
 
     }
